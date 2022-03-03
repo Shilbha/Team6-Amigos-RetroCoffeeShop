@@ -8,7 +8,7 @@ public class Menu {
     static Scanner input = new Scanner(System.in);
 
     public static void menu() {
-        System.out.println("Welcome \n1. Espresso (265) \n2. Americano (250)\n3. Cappuccino (260) \n4. Vanilla Latte (419) \n5.Mocha(325) \n6. Macchiato(495) \n7.Hot chocolate(240) \n8.cold brew black(280) \n9.Caramel Frappuccino (299) \n10.Done");
+        System.out.println("Welcome \n1. Espresso (₹265) \n2. Americano (₹250)\n3. Cappuccino (₹260) \n4. Vanilla Latte (₹419) \n5.Mocha(₹325) \n6. Macchiato(₹495) \n7.Hot chocolate(₹240) \n8.cold brew black(₹280) \n9.Caramel Frappuccino (₹299) \n10.Done");
     }
 
     public static double itemPrice(int foodItem) {
