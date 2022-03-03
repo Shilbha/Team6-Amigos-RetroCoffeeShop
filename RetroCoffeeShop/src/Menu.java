@@ -1,13 +1,26 @@
-import java.util.Scanner;
+import java.sql.*;
+import java.util.*;
+
 
 public class Menu {
-    public double subTotal;
+    public static double subTotal;
     public static double runningTotal;
     private static double itemPrice;
     static boolean ordering = true;
+    public static String name;
+    public static String phone;
+    public static int tax=100;
+//    public double total;
     static Scanner input = new Scanner(System.in);
 
     public static void menu() {
+		System.out.println("Enter your name: ");
+		String name = input.nextLine();
+		
+		System.out.println("Enter your Mobilenumber: ");
+		String phone = input.nextLine();
+
+  
         System.out.println("Welcome \n1. Espresso (265) \n2. Americano (250)\n3. Cappuccino (260) \n4. Vanilla Latte (419) \n5.Mocha(325) \n6. Macchiato(495) \n7.Hot chocolate(240) \n8.cold brew black(280) \n9.Caramel Frappuccino (299) \n10.Done");
     }
 
@@ -70,14 +83,32 @@ public class Menu {
         System.out.println(runningTotal);
         System.out.println("Enjoy your meal");
     }
-
-    public static void main(String[] args) {
+//    public static double total(double subTotal,int tax) {
+//        double total = subTotal + tax;
+//        System.out.println("Total: " + total);
+//        return total;
+//    }
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    	String url="jdbc:mysql://sql3.freesqldatabase.com:3306/sql3476648";
+		String username="sql3476648";
+		String password="SU7K3fmlti";
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		
+		Connection connection=DriverManager.getConnection(url,username,password);
+		
+		Statement statement=connection.createStatement();
+		String query1 = "INSERT INTO `order` (`name`, `phone`, `beverage`, `quantity`, `price`, `subtotal`, `tax`, `total`) VALUES ('Laks', '9345323858', 'Mocha ', '2', '500', '1000', '100', '1600')";
+		  statement.executeUpdate(query1);
+		
         int menuOption;
         int foodItem = 0;
         input = new Scanner(System.in);
+        menu();
         do {
             double runningTotal = 0;
-            menu();
+           
             menuOption = input.nextInt();
             switch (menuOption) {
             case 1:
@@ -124,8 +155,29 @@ public class Menu {
             }
         } while (ordering);
         {
-            subTotal(quantity(), itemPrice(foodItem));
+          subTotal(quantity(), itemPrice(foodItem));
             runningTotal = runningTotal + subTotal(quantity(), itemPrice(foodItem));
+   
         }
+        try {
+ 	       
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			
+//			
+//			Connection connection=DriverManager.getConnection(url,username,password);
+//			
+//			Statement statement=connection.createStatement();
+////			String query1 = "INSERT INTO `order`(`name`, `phone`, `beverage`, `price`, `subtotal`,`tax`,`total`) VALUES ("+name+",'"+phone+"',"+foodItem+",'"+itemPrice+"','"+subTotal+"','"+tax+"','"+runningTotal+"')";
+////     	    statement.executeUpdate(query1);
+//			String query1 = "INSERT INTO `order` (`name`, `phone`, `beverage`, `quantity`, `price`, `subtotal`, `tax`, `total`) VALUES ('Laks', '9345323858', 'Mocha ', '2', '500', '1000', '100', '1600')";
+//			  statement.executeUpdate(query1);
+     	   connection.close();
     }
+catch(Exception e) {
+			
+			System.out.println(e);
+		}
+ }
 }
+
+
