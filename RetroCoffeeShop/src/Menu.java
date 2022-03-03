@@ -83,11 +83,6 @@ public class Menu {
         System.out.println(runningTotal);
         System.out.println("Enjoy your meal");
     }
-//    public static double total(double subTotal,int tax) {
-//        double total = subTotal + tax;
-//        System.out.println("Total: " + total);
-//        return total;
-//    }
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
     	String url="jdbc:mysql://sql3.freesqldatabase.com:3306/sql3476648";
 		String username="sql3476648";
