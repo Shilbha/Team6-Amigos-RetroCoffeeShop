@@ -198,3 +198,61 @@ public class Menu{
 	}
 
 }
+    public static void main (String[] args) {
+        int menuOption;
+        int foodItem = 0;
+        input = new Scanner(System.in);
+        do {
+            double runningTotal = 0;
+            menu();
+            menuOption = input.nextInt();
+            switch (menuOption) {
+            case 1:
+                foodItem = 1;
+                itemPrice(foodItem);
+                break;
+            case 2:
+                foodItem = 2;
+                itemPrice(foodItem);
+                break;
+            case 3:
+                foodItem = 3;
+                itemPrice(foodItem);
+                break;
+            case 4:
+                foodItem = 4;
+                itemPrice(foodItem);
+                break;
+            case 5:
+                foodItem = 5;
+                itemPrice(foodItem);
+                break;
+            case 6:
+                foodItem = 6;
+                itemPrice(foodItem);
+                break;
+            case 7:
+                foodItem = 7;
+                itemPrice(foodItem);
+                break;
+            case 8:
+                foodItem = 8;
+                itemPrice(foodItem);
+                break;
+            case 9:
+                foodItem = 9;
+                itemPrice(foodItem);
+                break;
+            case 10:
+                done(runningTotal);
+                break;
+            default:
+                System.out.println("Invalid option.");
+            }
+        } while (ordering);
+        {
+            subTotal(quantity(), itemPrice(foodItem));
+            runningTotal = runningTotal + subTotal(quantity(), itemPrice(foodItem));
+        }
+    }
+}
