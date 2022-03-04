@@ -1,17 +1,25 @@
 import java.sql.*;
 import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Menu{
 	public static int quantity;
 	public static int subTotal;
-    public static int runningTotal;
+    public static double runningTotal;
     private static int itemPrice;
     static boolean ordering = true;
     public static String name;
+    public static String name1;
+    public static String name2;
+    public static String date1;
     public static String phone;
     public static String bev;
-    public static int tax=100;
+    public static double tax;
+    public static double points;
+    public static Date TodayDate =new Date();
+    public static SimpleDateFormat dateForm= new SimpleDateFormat("YYYY-MM-dd");
     static Scanner input = new Scanner(System.in);
 	
 
@@ -27,7 +35,6 @@ public class Menu{
 		String url="jdbc:mysql://sql3.freesqldatabase.com:3306/sql3476648";
 		String username="sql3476648";
 		String password="SU7K3fmlti";
-
 		
 		try {
 	
@@ -38,7 +45,7 @@ public class Menu{
 			
 			Statement statement=connection.createStatement();
 	        while(x) {
-			System.out.println(" 1.Order Entry\n 2.Bill\n 3.Points\n 4.Report\n");
+			System.out.println("Welcome\n 1.Order Entry\n 2.Bill\n 3.Points\n 4.Report\n");
 			int option=input.nextInt();
 			switch(option)
 			{
@@ -50,7 +57,7 @@ public class Menu{
 				System.out.println("Enter your Mobilenumber: ");
 				phone = input.next();
 				
-				System.out.println("Welcome \n1. Espresso (265) \n2. Americano (250)\n3. Cappuccino (260) \n4. Vanilla Latte (419) \n5.Mocha(325) \n6. Macchiato(495) \n7.Hot chocolate(240) \n8.cold brew black(280) \n9.Caramel Frappuccino (299) \n10.Exit");
+				System.out.println(" \n1. Espresso (265) \n2. Americano (250)\n3. Cappuccino (260) \n4. Vanilla Latte (419) \n5.Mocha(325) \n6. Macchiato(495) \n7.Hot chocolate(240) \n8.cold brew black(280) \n9.Caramel Frappuccino (299) \n10.Exit");
 				menuOption = input.nextInt();
 				switch (menuOption) {
 	            case 1:
@@ -91,11 +98,58 @@ public class Menu{
 	                break;
 	            default:
 	                System.out.println("Invalid option.");
+	                break;
 	            }
-				String query1 = "INSERT INTO `shop` (`name`, `phone`, `beverage`, `quantity`, `price`, `subtotal`, `tax`, `total`) VALUES ('"+name+"', '"+phone+"', '"+bev+"',"+quantity+","+itemPrice+","+subTotal+","+tax+","+runningTotal+")";
+				String query1 = "INSERT INTO `shop` (`name`, `phone`, `beverage`, `quantity`, `price`, `subtotal`, `tax`, `total`,`points`,`date`) VALUES ('"+name+"', '"+phone+"', '"+bev+"',"+quantity+","+itemPrice+","+subTotal+","+tax+","+runningTotal+","+points+",'"+dateForm.format(TodayDate)+"')";
          	    statement.executeUpdate(query1);
+         	    break;
 			}
-  			
+			case 2:{
+				System.out.println("Enter your name: ");
+				name1 = input.next();
+				
+			ResultSet result = statement.executeQuery("SELECT * FROM `shop` WHERE name='"+name1+"'");
+       	 while(result.next()) {
+					
+ 				System.out.println(result.getString(1)+ "\nBeverage:" + result.getString(3)+"\nQuantity:"+ result.getInt(4)+"\nCost:"+ result.getInt(5)+"\nSubtotal "+result.getInt(6)+"\nGST%:"+result.getInt(7)+"\nTotal:"+result.getInt(8));
+ 			    
+			  }
+       	 break;
+			}
+			case 3:{
+				System.out.println("Enter your name: ");
+				name2 = input.next();
+				
+			ResultSet result = statement.executeQuery("SELECT * FROM `shop` WHERE name='"+name1+"'");
+       	 while(result.next()) {
+					
+ 				System.out.println("Points:"+result.getString(9));
+ 			
+			  }
+       	 break;
+			}
+			case 4:{
+				System.out.println("Enter date: ");
+				date1 = input.next();
+				
+			ResultSet result = statement.executeQuery("SELECT * FROM `shop` WHERE date='"+date1+"'");
+       	 while(result.next()) {
+					
+       		System.out.println(result.getString(1)+ "\nBeverage:" + result.getString(3)+"\nQuantity:"+ result.getInt(4)+"\nCost:"+ result.getInt(5)+"\nSubtotal "+result.getInt(6)+"\nGST%:"+result.getInt(7)+"\nTotal:"+result.getInt(8));
+ 			
+			  }
+       	System.out.println("press 1 to continue and 0 to stop");
+		int y=input.nextInt();
+		if(y==1)
+		{
+			x=true;
+		}
+		else {
+			x=false;
+			exit();
+		}
+       	 break;
+			}
 			}
 			System.out.println("press 1 to continue and 0 to stop");
 			int y=input.nextInt();
@@ -126,8 +180,11 @@ public class Menu{
 
 
 	private static void done() {
-        System.out.println("Total: "+runningTotal);
-        System.out.println("Enjoy your meal");
+        System.out.println("Enjoy your drink!");
+	}
+	private static void exit() {
+        System.out.println("Thank you!");
+        System.exit(0);
 	}
 
 
@@ -192,8 +249,9 @@ public class Menu{
 
 	private static int subTotal(int quantity, int itemPrice2) {
 		subTotal = quantity * itemPrice;
+		tax=(subTotal*0.05);
 		runningTotal = subTotal + tax;
-        System.out.println("Subtotal: " + subTotal);
+		points = runningTotal/10;
         return subTotal;
 	}
 
