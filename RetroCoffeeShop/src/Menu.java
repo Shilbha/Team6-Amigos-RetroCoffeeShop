@@ -32,9 +32,9 @@ public class Menu{
         boolean x = true;
         input = new Scanner(System.in);
 		
-		String url="jdbc:mysql://sql3.freesqldatabase.com:3306/sql3476648";
-		String username="sql3476648";
-		String password="SU7K3fmlti";
+		String url="jdbc:mysql://sql3.freesqldatabase.com:3306/sql3478781";
+		String username="sql3478781";
+		String password="apHwkDTRBT";
 		
 		try {
 	
